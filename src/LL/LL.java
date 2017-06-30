@@ -30,6 +30,7 @@ public class LL<T> implements SingelyLinkedList<T>, Iterable<T> {
     public LL(LL ll){
         
     }
+    
     private void bubblesort(){
         
     }
@@ -45,7 +46,7 @@ public class LL<T> implements SingelyLinkedList<T>, Iterable<T> {
         Iterator <T> iterator;
         iterator = new Iterator<T>() {
             private Node runpointer = first;
-                        
+               
             @Override
             public boolean hasNext() {
                 return (runpointer.next != null);
