@@ -1,5 +1,1 @@
-Read
-new line
-hahahahh
-hahahhahah
-hello
+Einfach verkettete Liste
