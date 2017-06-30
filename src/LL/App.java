@@ -11,6 +11,6 @@ package LL;
  */
 public class App {
     public static void main(String[] args){
-        System.out.println("LL.App.main()");
+        //der kommentar ist ein Test für Git Hub
     }
 }
