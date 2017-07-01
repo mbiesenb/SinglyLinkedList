@@ -23,9 +23,11 @@ public class LL<T> implements SingelyLinkedList<T>, Iterable<T> {
     public static final int INTEGERCOMPERATOR = 1;
     
     private Node first = null;
+    private int currentSize;
+    private Node currentRunpointer = first;
 
     public LL() {
-        
+       currentSize = 0; 
     }
     public LL(LL ll){
         
@@ -97,9 +99,10 @@ public class LL<T> implements SingelyLinkedList<T>, Iterable<T> {
      * @param object
      */
     @Override
-    public void add(T object) {
+    /*public void add(T object) {
         if (isEmpty()) {
             first = new Node(object, null);
+            currentSize++;
             return;
         }
 
@@ -107,12 +110,26 @@ public class LL<T> implements SingelyLinkedList<T>, Iterable<T> {
         while (runpointer.next != null) {
             runpointer = runpointer.next;
         }
+        currentSize++;
         runpointer.next = new Node(object, null);
+    }*/
+    public void add(T object) {
+        if (isEmpty()) {
+            first = new Node(object, null);
+            currentSize++;
+            currentRunpointer = first;
+            return;
+        }
+        currentRunpointer.next = new Node(object, null);
+        currentRunpointer = currentRunpointer.next;
+        currentSize++;
     }
 
     @Override
     public void clear() {
         first = null;
+        currentSize = 0;
+        currentRunpointer = first;
     }
 
     @Override
@@ -151,6 +168,7 @@ public class LL<T> implements SingelyLinkedList<T>, Iterable<T> {
     @Override
     public void addFirst(T object) {
         first = new Node(object, first);
+        currentSize++;
     }
 
     @Override
@@ -163,13 +181,14 @@ public class LL<T> implements SingelyLinkedList<T>, Iterable<T> {
         if (isEmpty()) {
             return 0;
         }
-        int counter = 1;
+        /*int counter = 1;
         Node runpointer = first;
         while (runpointer.next != null) {
             runpointer = runpointer.next;
             counter++;
         }
-        return counter;
+        return counter;*/
+        return currentSize;
     }
 
     @Override
