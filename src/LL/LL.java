@@ -24,7 +24,7 @@ public class LL<T> implements SingelyLinkedList<T>, Iterable<T> {
     
     private Node first = null;
     private int currentSize;
-    private Node currentRunpointer = first;
+    private Node currentRunpointer = null;
 
     public LL() {
        currentSize = 0; 
@@ -39,30 +39,71 @@ public class LL<T> implements SingelyLinkedList<T>, Iterable<T> {
     private void insertionsort(){
         
     }
-    private void quicksort(){
+    @Override
+    public void quicksort(Comparator comp) {
+        if(size() < 2) return;
+        T pivot = getFirst();
+        LL <T> less = new LL();
+        LL <T> equal = new LL();
+        LL <T> greater = new LL();
+        for(T element  : this){
+            int compared = comp.compare(element, pivot);
+            if(compared > 0) greater.addFirst(element);
+            if(compared < 0) less.addFirst(element);
+            if(compared == 0) equal.addFirst(element);        
+        }
+        less.quicksort(comp);
+        greater.quicksort(comp);
+        this.clear();
+        for(T element : less){
+            add(element);
+        }
+        for(T element : equal){
+            add(element);
+        }
+        for(T element : greater){
+            add(element);
+        }
         
     }
 
     @Override
     public Iterator <T> iterator() {
-        Iterator <T> iterator;
-        iterator = new Iterator<T>() {
-            private Node runpointer = first;
-               
+        Iterator iterator = new Iterator() {
+            Node runfpointer  = first;
             @Override
             public boolean hasNext() {
-                return (runpointer.next != null);
+                return runfpointer != null;
             }
 
             @Override
-            public T next() {
-                if(isEmpty()) throw new NoSuchElementException();
-                Node temp = runpointer;
-                runpointer = runpointer.next;
-                return temp.data;
+            public Object next() {
+              if (runfpointer == null) throw new NoSuchElementException();
+              T result = runfpointer.data;
+              runfpointer = runfpointer.next;
+              return result;  
             }
         };
         return iterator;
+    }
+
+    @Override
+    public void remove(int index) {
+        if(isEmpty())throw new NoSuchElementException();
+        
+        //Node runpointer = new Node(data, index);
+        if(index <  0 || index >= currentSize) throw new IndexOutOfBoundsException();
+        if(index == 0){
+            first = first.next;
+            return;
+        }
+        Node runpointer = first;
+        for(int i = 0; i < index; i++){
+            runpointer = runpointer.next;
+        }
+        runpointer.next = runpointer.next.next;
+        currentSize--;
+        
     }
 
     private class Node {
@@ -133,10 +174,14 @@ public class LL<T> implements SingelyLinkedList<T>, Iterable<T> {
     }
 
     @Override
-    public void sort( int sortSelection) {
-        if(sortSelection == BUBBLESORT)     bubblesort();
-        if(sortSelection == INSERTIONSORT)  insertionsort();
-        if(sortSelection == QUICKSORT)      quicksort();
+    public void sort( int sortSelection, int comp) {
+        Comparator comparator = null;
+        if(comp == INTEGERCOMPERATOR) comparator = new IntegerComperator();
+        if(comp == STRINGCOMPERATOR) comparator = new StringComperator();
+        //if(sortSelection == BUBBLESORT)     bubblesort(comparator);
+        //if(sortSelection == INSERTIONSORT)  insertionsort(comparator);
+        if(sortSelection == QUICKSORT)      quicksort(comparator);
+    
     }
 
     @Override

@@ -4,6 +4,9 @@
  * and open the template in the editor.
  */
 package LL;
+
+import java.util.Comparator;
+
 /**
  *
  * @author Marvin
@@ -11,10 +14,12 @@ package LL;
 interface SingelyLinkedList <T> {
     void add(T object);
     void clear();
-    void sort(int sortSelection);
+    void sort(int sortSelection, int comp);
     void insertAfter(T object, int index);
     void insertBefore(T object, int index);
     void addFirst(T object);
+    void remove(int index);
+    void quicksort(Comparator comp);
     boolean isEmpty();
     int size();
     T getFirst();
